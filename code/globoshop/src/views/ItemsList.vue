@@ -1,0 +1,80 @@
+<script setup>
+import { useItemsStore } from '@/stores/items';
+
+const store = useItemsStore();
+
+const truncateDescription = (desc, limit) =>
+  desc.length > limit ? desc.slice(0, limit) + '...' : desc;
+</script>
+
+<template>
+  <div class="card-container">
+    <div class="card" v-for="item in store.items" :key="item.id">
+      <div class="card-title">{{ item.title }}</div>
+      <p class="card-price">${{ item.price.toFixed(2) }}</p>
+      <div class="card-description">
+        {{ truncateDescription(item.description, 70) }}
+      </div>
+      <div class="card-date">
+        Posted:: {{ item.date.toLocaleDateString('en') }}
+      </div>
+      <button class="add-to-cart" @click="store.addItemToCart(item.id)">
+        Add to cart
+      </button>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+}
+.card {
+  border: 1px solid #7f8c8d;
+  margin: 15px;
+  padding: 15px;
+  flex: 1 1 calc(25% - 30px);
+  box-sizing: border-box;
+  background-color: #34495e;
+  color: #b3e5fc;
+  border-radius: 10px;
+  text-align: center;
+}
+.card-title {
+  font-size: 23px;
+  font-weight: bold;
+  color: #b3e5fc;
+}
+.card-description {
+  color: #b3e5fc;
+  margin: 20px 0;
+}
+.card-date {
+  color: #b3e5fc;
+  margin: 10px 0;
+}
+.card-price {
+  color: #ea8300;
+  font-size: 20px;
+  font-weight: bold;
+}
+.add-to-cart {
+  background-color: #bb393f;
+  color: #ffffff;
+  padding: 10px 20px;
+  margin-top: 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s;
+}
+.add-to-cart:hover {
+  background-color: #ff7043;
+}
+.add-to-cart:active {
+  transform: scale(0.95);
+}
+</style>
