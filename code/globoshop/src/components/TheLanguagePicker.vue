@@ -1,23 +1,33 @@
 <script setup>
 import { useI18n } from 'vue-i18n';
+import { useRouter } from 'vue-router';
 
-const { locale, availableLocales } = useI18n();
+const i18n = useI18n();
+const { locale } = i18n;
+import { SUPPORTED_LOCALES, loadLocaleMessages } from '@/i18n';
+const router = useRouter();
 
 const changeLocale = (event) => {
   const newLocale = event.target.value;
-  locale.value = newLocale;
+  loadLocaleMessages(i18n, newLocale).then(() => {
+    locale.value = newLocale;
+    document.querySelector('html').setAttribute('lang', locale.value);
+    router.replace({ params: { locale: newLocale } }).catch(() => {
+      router.push('/');
+    });
+    localStorage.setItem('locale', newLocale);
+  });
 };
 </script>
 
 <template>
   <select @change="changeLocale">
     <option
-      v-for="supportedLocale in availableLocales"
+      v-for="supportedLocale in SUPPORTED_LOCALES"
       :key="`locale-${supportedLocale}`"
       :value="supportedLocale"
-    >
-      {{ supportedLocale }}
-    </option>
+      :selected="supportedLocale == locale"
+    >{{ supportedLocale }}</option>
   </select>
 </template>
 

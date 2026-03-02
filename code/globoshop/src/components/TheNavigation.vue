@@ -3,15 +3,15 @@ import { useI18n } from 'vue-i18n';
 import TheCart from '@/components/TheCart.vue';
 import TheLanguagePicker from '@/components/TheLanguagePicker.vue';
 
-const { t } = useI18n();
+const { t, locale } = useI18n();
 </script>
 
 <template>
   <div class="nav">
     <div>
       <span class="logo">Globoshop</span>
-      <RouterLink to="/items">{{ t('routes.items') }}</RouterLink>
-      <RouterLink to="/about">{{ t('routes.about') }}</RouterLink>
+      <RouterLink :to="`/${locale}/items`">{{ t('routes.items') }}</RouterLink>
+      <RouterLink :to="`/${locale}/about`">{{ t('routes.about') }}</RouterLink>
       <TheLanguagePicker />
       <TheCart />
     </div>
