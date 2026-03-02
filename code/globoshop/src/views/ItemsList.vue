@@ -1,5 +1,7 @@
 <script setup>
 import { useItemsStore } from '@/stores/items';
+import { useI18n } from 'vue-i18n';
+const { d, t } = useI18n();
 
 const store = useItemsStore();
 
@@ -11,16 +13,26 @@ const truncateDescription = (desc, limit) =>
   <div class="card-container">
     <div class="card" v-for="item in store.items" :key="item.id">
       <div class="card-title">{{ item.title }}</div>
-      <p class="card-price">${{ item.price.toFixed(2) }}</p>
-      <div class="card-description">
-        {{ truncateDescription(item.description, 70) }}
-      </div>
-      <div class="card-date">
-        Posted:: {{ item.date.toLocaleDateString('en') }}
-      </div>
-      <button class="add-to-cart" @click="store.addItemToCart(item.id)">
-        Add to cart
-      </button>
+      <i18n-n
+        class="card-price"
+        tag="p"
+        :value="item.price"
+        format="currencyFormat"
+      >
+        <template #fraction="slotProps">
+          <small>{{ slotProps.fraction }}</small>
+        </template>
+      </i18n-n>
+      <div
+        class="card-description"
+      >{{ truncateDescription(item.description, 70) }}</div>
+      <div
+        class="card-date"
+      >{{ t('items.posted') }}: {{ d(item.date, 'shortFormat') }}</div>
+      <button
+        class="add-to-cart"
+        @click="store.addItemToCart(item.id)"
+      >{{ t('items.addToCart') }}</button>
     </div>
   </div>
 </template>

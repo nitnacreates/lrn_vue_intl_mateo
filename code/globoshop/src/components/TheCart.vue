@@ -51,12 +51,15 @@ export default {
       :style="{ display: cartVisible ? 'block' : 'none' }"
     >
       <h3
+        class="col numOfItems"
+      >{{ $t('cart.items', numOfItemsInCart) }}</h3>
+      <h3
         class="col"
-      >{{ $t('cart.subtotal') }}: ${{ subtotal.toFixed(2) }}</h3>
+      >{{ $t('cart.subtotal') }}: {{ $n(subtotal, 'currencyFormat') }}</h3>
       <div class="col" v-for="item in itemsInCart" :key="item.id">
         <div class="item">
           <h3>{{ item.title }}</h3>
-          <p>${{ item.subtotal.toFixed(2) }}</p>
+          <p>{{ $n(item.subtotal, 'currencyFormat') }}</p>
           <p class="itemQuantity">
             <button @click="addItemToCart(item.id)">+</button>
             <span>{{ item.quantity }}</span>

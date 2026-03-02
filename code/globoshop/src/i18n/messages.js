@@ -8,7 +8,7 @@ export default {
       cart: 'Cart',
       subtotal: 'Subtotal',
       clearButton: 'Remove this item',
-      items: 'item'
+      items: '{n} item | {n} items'
     },
     aboutUs: {
       firstParagraph: "Learn more @.lower:routes.about{'.'}",
@@ -30,7 +30,8 @@ export default {
     cart: {
       cart: 'Košarica',
       subtotal: 'Ukupno',
-      clearButton: 'Ukloni ovaj artikl'
+      clearButton: 'Ukloni ovaj artikl',
+      items: '{n} artikl | {n} artikla | {n} artikala'
     },
     aboutUs: {
       firstParagraph: "Nauči više @.lower:routes.about{'.'}",
